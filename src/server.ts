@@ -56,9 +56,13 @@ httpServer.on('upgrade', (req, socket, head) => {
 
 wss.on('connection', handleSTTConnection)
 
-httpServer.listen(port, () => {
-  logger.info('Server', `▲ Jarvis backend prêt sur http://localhost:${port}`)
-  console.log(`\n▲ Jarvis backend  http://localhost:${port}`)
-  console.log(`  POST /api/chat   POST /api/token   GET /health`)
-  console.log(`  WS   ws://localhost:${port}/ws/stt\n`)
-})
+if (!process.env.VERCEL) {
+  httpServer.listen(port, () => {
+    logger.info('Server', `▲ Jarvis backend prêt sur http://localhost:${port}`)
+    console.log(`\n▲ Jarvis backend  http://localhost:${port}`)
+    console.log(`  POST /api/chat   POST /api/token   GET /health`)
+    console.log(`  WS   ws://localhost:${port}/ws/stt\n`)
+  })
+}
+
+export default app
